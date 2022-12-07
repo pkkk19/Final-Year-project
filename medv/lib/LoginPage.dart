@@ -23,7 +23,8 @@ class _MyWidgetState extends State<LoginPage> {
             height: h * 0.3,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/Logo.png"), fit: BoxFit.cover)),
+                    image: AssetImage("assets/Logo3.png"),
+                    fit: BoxFit.contain)),
           ),
           Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
@@ -102,12 +103,38 @@ class _MyWidgetState extends State<LoginPage> {
               )
             ]),
           ),
+          SizedBox(height: 60),
           Container(
-            width: w,
-            height: h * 0.3,
+            width: w * 0.5,
+            height: h * 0.08,
             decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
                 image: DecorationImage(
-                    image: AssetImage("assets/Logo.png"), fit: BoxFit.cover)),
+                    image: AssetImage("assets/Gradient.jpg"),
+                    fit: BoxFit.cover)),
+            child: Center(
+              child: Text(
+                "Sign in",
+                style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+          ),
+          SizedBox(height: w * 0.15),
+          RichText(
+            text: TextSpan(
+                text: "Don\'t have an account? ",
+                style: TextStyle(color: Colors.grey[500], fontSize: 20),
+                children: [
+                  TextSpan(
+                      text: " Create",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold))
+                ]),
           )
         ],
       ),

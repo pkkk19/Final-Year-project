@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medv/Home.dart';
+import 'package:medv/LoginPage.dart';
 import 'package:medv/main.dart';
 
 class splash extends StatefulWidget {
@@ -19,11 +19,7 @@ class _splashState extends State<splash> {
   _navigatetohome() async {
     await Future.delayed(Duration(milliseconds: 1500), () {});
     Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MyHomePage(
-                  title: 'something',
-                )));
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override
