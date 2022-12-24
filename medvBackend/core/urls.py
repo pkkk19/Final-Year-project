@@ -1,6 +1,7 @@
-from django.urls import path
-from .views import aPage
+from django.contrib import admin
+from django.urls import path, include
+
 
 urlpatterns = [
-    path('a', aPage),
+    path('', include('dj_rest_auth.urls')),
 ]
