@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medv/LoginPage.dart';
 import 'package:medv/main.dart';
+import 'package:medv/signup_page.dart';
 
 class splash extends StatefulWidget {
   const splash({super.key});

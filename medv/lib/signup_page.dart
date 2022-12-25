@@ -1,13 +1,15 @@
-import 'dart:html';
-
+import 'package:flutter/gestures.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage ({Key? key}) : super(key: key);
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -15,26 +17,26 @@ class SignUpPage extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            width: w,
-            height: h * 0.3,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/Logo3.png"),
-                    fit: BoxFit.contain)),
-          ),
+              width: w,
+              height: h * 0.3,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/Logo3.png"),
+                      fit: BoxFit.contain)),
+              child: Column(children: [
+                SizedBox(
+                  height: h * 0.16,
+                ),
+                CircleAvatar(
+                    backgroundColor: Colors.white70,
+                    radius: 50,
+                    backgroundImage: AssetImage("assets/Profile.png"))
+              ])),
           Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
             width: w,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                "Hello",
-                style: TextStyle(fontSize: 70, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Sign into your account",
-                style: TextStyle(fontSize: 20, color: Colors.grey[500]),
-              ),
               SizedBox(height: 40),
               Container(
                 decoration: BoxDecoration(
@@ -49,6 +51,9 @@ class SignUpPage extends StatelessWidget {
                     ]),
                 child: TextField(
                   decoration: InputDecoration(
+                      hintText: "   Email",
+                      prefixIcon:
+                          Icon(Icons.email, color: Colors.deepOrangeAccent),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                           borderSide:
@@ -75,6 +80,9 @@ class SignUpPage extends StatelessWidget {
                     ]),
                 child: TextField(
                   decoration: InputDecoration(
+                      hintText: "   Password",
+                      prefixIcon: Icon(Icons.password_outlined,
+                          color: Colors.deepOrangeAccent),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                           borderSide:
@@ -91,10 +99,6 @@ class SignUpPage extends StatelessWidget {
               Row(
                 children: [
                   Expanded(child: Container()),
-                  Text(
-                    "Forgot your password?",
-                    style: TextStyle(fontSize: 20, color: Colors.grey[500]),
-                  )
                 ],
               )
             ]),
@@ -110,7 +114,7 @@ class SignUpPage extends StatelessWidget {
                     fit: BoxFit.cover)),
             child: Center(
               child: Text(
-                "Sign in",
+                "Sign Up",
                 style: TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
@@ -118,19 +122,18 @@ class SignUpPage extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 10),
+          RichText(
+              text: TextSpan(
+                  recognizer: TapGestureRecognizer()..onTap = () => Get.back(),
+                  text: "Have an account?",
+                  style: TextStyle(fontSize: 20, color: Colors.grey[500]))),
           SizedBox(height: w * 0.15),
           RichText(
             text: TextSpan(
-                text: "Don\'t have an account? ",
-                style: TextStyle(color: Colors.grey[500], fontSize: 20),
-                children: [
-                  TextSpan(
-                      text: " Create",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold))
-                ]),
+              text: "Sign Up using one of the following methods",
+              style: TextStyle(color: Colors.grey[500], fontSize: 16),
+            ),
           )
         ],
       ),
