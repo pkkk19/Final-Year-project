@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medv/LoginPage.dart';
 import 'package:medv/main.dart';
 import 'package:medv/signup_page.dart';
+import 'package:video_player/video_player.dart';
 
 class splash extends StatefulWidget {
   const splash({super.key});
@@ -11,28 +12,55 @@ class splash extends StatefulWidget {
 }
 
 class _splashState extends State<splash> {
+  // video controller
+  late VideoPlayerController _controller;
+
   @override
   void initState() {
     super.initState();
-    _navigatetohome();
+
+    _controller = VideoPlayerController.asset(
+      'assets/nike_animation.mp4',
+    )
+      ..initialize().then((_) {
+        setState(() {});
+      })
+      ..setVolume(0.0);
+
+    _playVideo();
   }
 
-  _navigatetohome() async {
-    await Future.delayed(Duration(milliseconds: 1500), () {});
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
+  void _playVideo() async {
+    // playing video
+    _controller.play();
+
+    //add delay till video is complite
+    await Future.delayed(const Duration(seconds: 4));
+
+    // navigating to home screen
+    Navigator.pushNamed(context, '/');
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Container(
-        child: Text(
-          'splash Screen',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
+      backgroundColor: Colors.black,
+      body: Center(
+        child: _controller.value.isInitialized
+            ? AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(
+                  _controller,
+                ),
+              )
+            : Container(),
       ),
-    ));
+    );
   }
 }
