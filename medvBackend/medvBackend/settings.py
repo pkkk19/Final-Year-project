@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # new
     'django.contrib.sites',
+    'base.apps.BaseConfig',
     # 3rd party app
     'rest_framework',
     'rest_framework.authtoken',
