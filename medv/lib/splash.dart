@@ -20,7 +20,7 @@ class _splashState extends State<splash> {
     super.initState();
 
     _controller = VideoPlayerController.asset(
-      'assets/nike_animation.mp4',
+      'assets/Medical.mp4',
     )
       ..initialize().then((_) {
         setState(() {});
@@ -38,7 +38,7 @@ class _splashState extends State<splash> {
     await Future.delayed(const Duration(seconds: 4));
 
     // navigating to home screen
-    Navigator.pushNamed(context, '/');
+    SignUpPage();
   }
 
   @override
