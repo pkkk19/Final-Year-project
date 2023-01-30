@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:medv/Splash.dart';
 import 'package:get/get.dart';
+import 'package:medv/constants.dart';
+import 'package:medv/screens/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +15,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Med V',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: KBackgroundColor,
+        primaryColor: kPrimaryColor,
+        textTheme: Theme.of(context).textTheme.apply(bodyColor: KTextColor),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: splash(),
+      home: HomeScreen(),
     );
   }
 }
