@@ -3,6 +3,7 @@ import 'package:medv/Splash.dart';
 import 'package:get/get.dart';
 import 'package:medv/constants.dart';
 import 'package:medv/screens/home/home_screen.dart';
+import 'package:medv/screens/scanner/Scanner.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         textTheme: Theme.of(context).textTheme.apply(bodyColor: KTextColor),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      home: Scanner(),
     );
   }
 }

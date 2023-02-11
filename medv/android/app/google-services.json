@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "880523593546",
+    "project_id": "medv-d51c4",
+    "storage_bucket": "medv-d51c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880523593546:android:d4cb2b12d6a29e843aa3b3",
+        "android_client_info": {
+          "package_name": "com.example.medv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880523593546-4dm9r25c4n5cut31bldrbdl6qake9nr8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH5Fr6Y455IAK0V3ArQqPBZtVxX-JFYls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880523593546-4dm9r25c4n5cut31bldrbdl6qake9nr8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
