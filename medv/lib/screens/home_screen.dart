@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medv/constants.dart';
-
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'components/body.dart';
+
+import 'components/home/User_home.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,12 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   final List<Widget> _pages = [
-    Center(
-      child: Text(
-        'Home',
-        style: TextStyle(fontSize: 50),
-      ),
-    ),
+    UserHome(),
     Center(
       child: Text(
         'Add',
