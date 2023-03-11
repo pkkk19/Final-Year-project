@@ -23,7 +23,7 @@ class _ScannerState extends State<Scanner> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Text Recognition example"),
+        title: const Text("Scanner"),
       ),
       body: Center(
           child: SingleChildScrollView(
