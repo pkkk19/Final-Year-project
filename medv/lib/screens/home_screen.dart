@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medv/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:medv/screens/components/Add/add.dart';
 
 import 'components/home/User_home.dart';
 
@@ -23,12 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = [
     UserHome(),
-    Center(
-      child: Text(
-        'Add',
-        style: TextStyle(fontSize: 50),
-      ),
-    ),
+    Add(),
     Center(
       child: Text(
         'Profile',
@@ -40,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 227, 238, 240),
-      appBar: buildAppBar(),
       body: _pages[_selectedIndex],
       bottomNavigationBar: Container(
           color: KBackgroundColor,
