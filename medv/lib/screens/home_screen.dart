@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medv/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:medv/screens/components/Add/add.dart';
+import 'package:medv/screens/components/profile/profile_screen.dart';
 
 import 'components/home/User_home.dart';
 
@@ -25,12 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     UserHome(),
     Add(),
-    Center(
-      child: Text(
-        'Profile',
-        style: TextStyle(fontSize: 50),
-      ),
-    ),
+    ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {

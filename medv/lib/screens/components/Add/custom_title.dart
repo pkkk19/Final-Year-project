@@ -16,7 +16,7 @@ class CustomTitle extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: KDefaultPadding / 4),
+            padding: const EdgeInsets.only(left: KDefaultPadding / 100),
             child: Text(
               text,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -29,7 +29,7 @@ class CustomTitle extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(right: KDefaultPadding / 4),
               height: 7,
-              color: kPrimaryColor.withOpacity(0.2),
+              color: kPrimaryColor.withOpacity(0.1),
             ),
           )
         ],

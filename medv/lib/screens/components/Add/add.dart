@@ -21,8 +21,10 @@ class _AddState extends State<Add> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Spacer(),
-            CustomTitle(text: "Add"),
-            Spacer(),
+            CustomTitle(text: "Update"),
+            Container(
+              height: 23,
+            ),
             Container(
               width: 340,
               height: 270,
