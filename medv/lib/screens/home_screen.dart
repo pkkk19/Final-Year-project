@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 227, 238, 240),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: _pages[_selectedIndex],
       bottomNavigationBar: Container(
           color: KBackgroundColor,

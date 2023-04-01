@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class account extends StatefulWidget {
+class settings extends StatefulWidget {
   @override
   _account createState() => _account();
 }
 
-class _account extends State<account> {
+class _account extends State<settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,18 +27,25 @@ class _account extends State<account> {
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView(
           children: [
+            Text(
+              "Settings",
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             Row(
               children: [
                 Icon(
-                  Icons.person,
+                  Icons.volume_up_outlined,
                   color: Colors.green,
                 ),
                 SizedBox(
                   width: 8,
                 ),
                 Text(
-                  "Account",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  "Notifications",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -49,11 +56,23 @@ class _account extends State<account> {
             SizedBox(
               height: 10,
             ),
-            buildAccountOptionRow(context, "Change password"),
-            buildAccountOptionRow(context, "Content settings"),
-            buildAccountOptionRow(context, "Social"),
-            buildAccountOptionRow(context, "Language"),
-            buildAccountOptionRow(context, "Privacy and security"),
+            buildNotificationOptionRow("New for you", true),
+            buildNotificationOptionRow("Account activity", true),
+            buildNotificationOptionRow("Opportunity", false),
+            SizedBox(
+              height: 50,
+            ),
+            // Center(
+            //   child: Button(
+            //     padding: EdgeInsets.symmetric(horizontal: 40),
+            //     shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(20)),
+            //     onPressed: () {},
+            //     child: Text("SIGN OUT",
+            //         style: TextStyle(
+            //             fontSize: 16, letterSpacing: 2.2, color: Colors.black)),
+            //   ),
+            // )
           ],
         ),
       ),
