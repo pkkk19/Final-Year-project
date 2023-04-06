@@ -5,3 +5,4 @@ passlib
 email-validator
 uvicorn
 dotenv
+-m pip install --upgrade pip
