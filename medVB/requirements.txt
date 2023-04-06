@@ -1,0 +1,6 @@
+fastapi[all]
+Pyjwt
+SQLAlchemy
+passlib
+email-validator
+uvicorn
