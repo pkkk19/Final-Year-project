@@ -4,3 +4,4 @@ SQLAlchemy
 passlib
 email-validator
 uvicorn
+dotenv
