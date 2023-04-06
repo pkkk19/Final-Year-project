@@ -10,21 +10,15 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = _fastapi.FastAPI()
 
-origins = [
-    "http://localhost",
-    "http://localhost:8000",
-    "http://localhost:3000",
-    "https://example.com",
-    "https://example.com:8080",
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.post("/api/users")
 async def create_user(user: _schemas.UserCreate, db: _orm.Session = _fastapi.Depends(_services.get_db)):
@@ -37,6 +31,11 @@ async def create_user(user: _schemas.UserCreate, db: _orm.Session = _fastapi.Dep
     user = await _services.create_user(user=user, db=db)
 
     return await _services.create_token(user=user)
+
+
+@app.get("/hello")
+async def hello():
+    return "hello"
 
 
 @app.post("/api/token")

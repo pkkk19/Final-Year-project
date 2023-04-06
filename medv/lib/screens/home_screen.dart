@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medv/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:medv/screens/components/Add/add.dart';
+import 'package:medv/screens/components/home/User_home_test.dart';
 import 'package:medv/screens/components/profile/profile_screen.dart';
 
 import 'components/home/User_home.dart';
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   final List<Widget> _pages = [
-    UserHome(),
+    UserHomeTest(),
     Add(),
     ProfileScreen(),
   ];
@@ -36,14 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: Container(
           color: KBackgroundColor,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
             child: GNav(
               backgroundColor: KBackgroundColor,
               color: kPrimaryColor,
               activeColor: kPrimaryColor,
               tabBackgroundColor: Colors.grey.shade300,
               gap: 8,
-              padding: EdgeInsets.all(12),
+              padding: EdgeInsets.all(15),
 //=====================================================================
               onTabChange: _navigate,
 

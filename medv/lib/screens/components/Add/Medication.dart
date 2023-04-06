@@ -1,8 +1,12 @@
+import 'dart:core';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:medv/constants.dart';
+import 'package:medv/screens/components/Add/saveDetails.dart';
 
 class medication extends StatefulWidget {
   const medication({Key? key}) : super(key: key);
@@ -12,18 +16,92 @@ class medication extends StatefulWidget {
 }
 
 class _ScannerState extends State<medication> {
+  List<String> medicationSuffixes = [
+    "afil",
+    "ane",
+    "arabine",
+    "arone",
+    "asone",
+    "azepam",
+    "azine",
+    "azole",
+    "bactam",
+    "barb",
+    "caine",
+    "calci",
+    "ciclovir",
+    "cycline",
+    "dazole",
+    "dipine",
+    "dronate",
+    "eprazole",
+    "ergot",
+    "fibrate",
+    "gabalin",
+    "gliflozin",
+    "glitazone",
+    "gravir",
+    "ine",
+    "ipramine",
+    "irudin",
+    "lam",
+    "micin",
+    "mab",
+    "navir",
+    "nib",
+    "olol",
+    "omycin",
+    "oxacin",
+    "parin",
+    "penem",
+    "phylline",
+    "prazole",
+    "pril",
+    "prost",
+    "ridone",
+    "sartan",
+    "semide",
+    "setron",
+    "sone",
+    "statin",
+    "tadine",
+    "terol",
+    "thiazide",
+    "tidine",
+    "trel",
+    "triptan",
+    "tyline",
+    "vir",
+    "vudine",
+    "xaban",
+    "zepam",
+    "zoline"
+  ];
   bool textScanning = false;
 
   XFile? imageFile;
 
   String scannedText = "";
+  String medicationName = "";
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color:
+              kPrimaryColor, // Set the color of all icons in the app bar here
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         centerTitle: true,
-        title: const Text("medication"),
+        titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: kPrimaryColor,
+            ),
+        title: const Text(
+          "Medication",
+        ),
       ),
       body: Center(
           child: SingleChildScrollView(
@@ -113,7 +191,7 @@ class _ScannerState extends State<medication> {
               ),
               Container(
                 child: Text(
-                  scannedText,
+                  medicationName,
                   style: TextStyle(fontSize: 20),
                 ),
               )
@@ -152,8 +230,26 @@ class _ScannerState extends State<medication> {
         scannedText = scannedText + line.text + "\n";
       }
     }
+
     textScanning = false;
     setState(() {});
+    Get.to(() => SaveDetails(), arguments: {'medicationName': medicationName});
+    getMedicationName();
+  }
+
+  void getMedicationName() {
+    List<String> words = scannedText.split(RegExp(r'\s+'));
+    // Find the words that end with a medication suffix
+    Set<String> medicationWords = {};
+    for (String word in words) {
+      for (String suffix in medicationSuffixes) {
+        if (word.contains(suffix)) {
+          medicationWords.add(word);
+          break;
+        }
+      }
+    }
+    medicationName = (medicationWords.join(', '));
   }
 
   @override

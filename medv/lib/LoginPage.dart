@@ -37,9 +37,10 @@ class _MyWidgetState extends State<LoginPage> {
   }
 
   Future<String> authenticate(String username, String password) async {
+    Get.to(() => HomeScreen());
     try {
       final response = await post(
-        Uri.parse('http://localhost:8000/api/token'),
+        Uri.parse('http://100.22.61.74:8000/api/token'),
         headers: {
           'accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded',
