@@ -33,7 +33,7 @@ async def create_user(user: _schemas.UserCreate, db: _orm.Session = _fastapi.Dep
     return await _services.create_token(user=user)
 
 
-@app.get("/hello")
+@app.get("/")
 async def hello():
     return "hello"
 
