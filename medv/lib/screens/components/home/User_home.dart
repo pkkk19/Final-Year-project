@@ -18,7 +18,7 @@ class UserHome extends StatelessWidget {
           TitleWithMoreBtn(title: "Medical Reports", press: () {}),
           Reports(),
           TitleWithMoreBtn(title: "Medicines In Use", press: () {}),
-          Medicine(),
+          // Medicine(),
         ],
       ),
     );

@@ -4,6 +4,7 @@ import 'package:medv/constants.dart';
 class Medicine extends StatelessWidget {
   const Medicine({
     Key? key,
+    required String medicineName,
   }) : super(key: key);
 
   @override
