@@ -33,7 +33,7 @@ async def create_user(user: _schemas.UserCreate, db: _orm.Session = _fastapi.Dep
     return await _services.create_token(user=user)
 
 
-@app.get("/")
+@app.get("/hello")
 async def hello():
     return "hello"
 
@@ -67,3 +67,47 @@ async def create_post(
 async def get_user_posts(user: _schemas.User = _fastapi.Depends(_services.get_current_user),
                          db: _orm.Session = _fastapi.Depends(_services.get_db)):
     return await _services.get_user_posts(user=user, db=db)
+
+
+@app.post("/user-details-post", response_model=_schemas.UserDetail)
+async def UserDetail(
+    UserDetail: _schemas.UserDetailCreate,
+    user: _schemas.User = _fastapi.Depends(_services.get_current_user),
+    db: _orm.Session = _fastapi.Depends(_services.get_db)
+):
+    return await _services.UserDetail(user=user, db=db, UserDetail=UserDetail)
+
+
+@app.get("/user-details-get", response_model=List[_schemas.UserDetail])
+async def get_UserDetails(
+    user: _schemas.User = _fastapi.Depends(_services.get_current_user),
+    db: _orm.Session = _fastapi.Depends(_services.get_db)
+):
+    return await _services.get_UserDetail(user=user, db=db)
+
+# ====================================================================
+
+
+@app.post("/medicine-post", response_model=_schemas.medicine)
+async def medicine(
+    medicine: _schemas.medicinecreate,
+    user: _schemas.User = _fastapi.Depends(_services.get_current_user),
+    db: _orm.Session = _fastapi.Depends(_services.get_db)
+):
+    return await _services.UserMedicine(user=user, db=db, medicine=medicine)
+
+
+@app.get("/medicine-get", response_model=List[_schemas.medicine])
+async def get_UserMedicine(
+    user: _schemas.User = _fastapi.Depends(_services.get_current_user),
+    db: _orm.Session = _fastapi.Depends(_services.get_db)
+):
+    return await _services.get_UserMedicine(user=user, db=db)
+
+
+@app.delete("/medicine-delete/{medicine_id}", status_code=204)
+async def delete_medicine(medicine_id: int, user: _schemas.User = _fastapi.Depends(_services.get_current_user),
+                          db: _orm.Session = _fastapi.Depends(_services.get_db)
+                          ):
+
+    return await _services.drop_UserMedicine(db=db, user=user, medicine_id=medicine_id)

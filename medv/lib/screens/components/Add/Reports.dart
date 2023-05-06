@@ -1,68 +1,58 @@
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:medv/components/utiliReport.dart';
+import 'package:printing/printing.dart';
 import '../../../components/pdfMobile.dart' if (dart.library.html) 'web.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
-class reports extends StatelessWidget {
-  const reports({Key? key, required this.text}) : super(key: key);
+class reports extends StatefulWidget {
+  reports({Key? key, required this.text}) : super(key: key);
   final String text;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: ElevatedButton(onPressed: _createPDF, child: Text("create PDF")),
-    ));
+  State<reports> createState() => _reportsState();
+}
+
+class _reportsState extends State<reports> {
+  PrintingInfo? printingInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    _init();
   }
 
-  Future<void> _createPDF() async {
-    PdfDocument document = PdfDocument();
-    final page = document.pages.add();
+  Future<void> _init() async {
+    final info = await Printing.info();
+    setState(() {
+      printingInfo = info;
+    });
+  }
 
-    page.graphics
-        .drawString(text, PdfStandardFont(PdfFontFamily.helvetica, 30));
+  @override
+  Widget build(BuildContext context) {
+    pw.RichText.debug = true;
+    final actions = <PdfPreviewAction>[
+      if (!kIsWeb)
+        const PdfPreviewAction(icon: Icon(Icons.save), onPressed: saveAsFile)
+    ];
 
-    // page.graphics.drawImage(
-    //     PdfBitmap(await _readImageData('Pdf_Succinctly.jpg')),
-    //     Rect.fromLTWH(0, 100, 440, 550));
-
-    PdfGrid grid = PdfGrid();
-    grid.style = PdfGridStyle(
-        font: PdfStandardFont(PdfFontFamily.helvetica, 30),
-        cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2));
-
-    grid.columns.add(count: 3);
-    grid.headers.add(1);
-
-    PdfGridRow header = grid.headers[0];
-    header.cells[0].value = 'Roll No';
-    header.cells[1].value = 'Name';
-    header.cells[2].value = 'Class';
-
-    PdfGridRow row = grid.rows.add();
-    row.cells[0].value = '1';
-    row.cells[1].value = 'Arya';
-    row.cells[2].value = '6';
-
-    row = grid.rows.add();
-    row.cells[0].value = '2';
-    row.cells[1].value = 'John';
-    row.cells[2].value = '9';
-
-    row = grid.rows.add();
-    row.cells[0].value = '3';
-    row.cells[1].value = 'Tony';
-    row.cells[2].value = '8';
-
-    grid.draw(
-        page: document.pages.add(), bounds: const Rect.fromLTWH(0, 0, 0, 0));
-
-    List<int> bytes = await document.save();
-    document.dispose();
-
-    saveAndLaunchFile(bytes, 'Output.pdf');
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Flutter PDF"),
+      ),
+      body: PdfPreview(
+        maxPageWidth: 700,
+        actions: actions,
+        onPrinted: showPrintedToast,
+        onShared: showSharedToast,
+        build: generatePDF,
+      ),
+    );
   }
 }
 

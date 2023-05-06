@@ -13,20 +13,6 @@ class UserHomeTest extends StatefulWidget {
 }
 
 class _UserHomeTestState extends State<UserHomeTest> {
-  String _greetingMessage = '';
-
-  @override
-  void initState() {
-    super.initState();
-    setGreetingMessage(_setMessageState);
-  }
-
-  void _setMessageState(String message) {
-    setState(() {
-      _greetingMessage = message;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     //It will provide us total height and width of our screen

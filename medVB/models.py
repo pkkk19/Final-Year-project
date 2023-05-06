@@ -19,6 +19,9 @@ class User(_database.Base):
     def verify_password(self, password: str):
         return _hash.bcrypt.verify(password, self.hashed_password)
 
+# ==================================================================================
+
+
 class Post(_database.Base):
     __tablename__ = "posts"
     id = _sql.Column(_sql.Integer, primary_key=True, index=True)
@@ -27,3 +30,28 @@ class Post(_database.Base):
     date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
 
     owner = _orm.relationship("User", back_populates="posts")
+
+# ===================================================================================
+
+
+class UserDetail(_database.Base):
+    __tablename__ = "UserDetails"
+    id = _sql.Column(_sql.Integer, primary_key=True, index=True)
+    owner_id = _sql.Column(_sql.Integer, _sql.ForeignKey("users.id"))
+    FirstName = _sql.Column(_sql.String, index=True)
+    LastName = _sql.Column(_sql.String, index=True)
+    date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
+
+    owner = _orm.relationship("User")
+
+
+class medicine(_database.Base):
+    __tablename__ = "medicine"
+    id = _sql.Column(_sql.Integer, primary_key=True, index=True)
+    owner_id = _sql.Column(_sql.Integer, _sql.ForeignKey("users.id"))
+    medicineName = _sql.Column(_sql.String, index=True)
+    time = _sql.Column(_sql.String, index=True)
+    days = _sql.Column(_sql.String, index=True)
+    date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
+
+    owner = _orm.relationship("User")

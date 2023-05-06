@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:medv/LoginPage.dart';
 import 'package:medv/Splash.dart';
 import 'package:get/get.dart';
+import 'package:medv/components/auth_controller.dart';
 import 'package:medv/constants.dart';
 import 'package:medv/screens/home_screen.dart';
 import 'package:medv/screens/scanner/Scanner.dart';
 import 'package:medv/welcome_page.dart';
 
 void main() {
+  Get.put(AuthController());
   runApp(const MyApp());
 }
 

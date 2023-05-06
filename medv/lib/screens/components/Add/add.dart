@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:medv/screens/components/Add/Medication.dart';
 import 'package:medv/screens/components/Add/Reports.dart';
 import 'package:medv/screens/components/Add/custom_title.dart';
+import 'package:medv/screens/components/Add/scanner/OpenCVScanner.dart';
 import 'package:medv/screens/scanner/Scanner.dart';
 
 import '../../../constants.dart';

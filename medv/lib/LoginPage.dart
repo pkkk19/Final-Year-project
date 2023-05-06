@@ -7,23 +7,19 @@ import 'package:http/http.dart';
 import 'package:http/http.dart' as responses;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:medv/components/auth_controller.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatelessWidget {
+  final AuthController authController = Get.find();
 
-  @override
-  State<LoginPage> createState() => _MyWidgetState();
-}
-
-class _MyWidgetState extends State<LoginPage> {
   TextEditingController emailcontroller = TextEditingController();
+
   TextEditingController passwordcontroller = TextEditingController();
 
   void login(String email, password) async {
-    Get.to(() => HomeScreen());
     try {
       responses.Response response = await post(
-          Uri.parse("http://127.0.0.1:8000/api/token"),
+          Uri.parse("https://medical-vault-medv.onrender.com/api/token"),
           body: {'username': email, 'password': password});
 
       if (response.statusCode == 200) {
@@ -36,11 +32,13 @@ class _MyWidgetState extends State<LoginPage> {
     }
   }
 
+  String endpoint = "http://100.22.160.236:8000/";
+  String hostEndpoint = "https://medical-vault-medv.onrender.com";
   Future<String> authenticate(String username, String password) async {
-    Get.to(() => HomeScreen());
+    // Get.to(() => HomeScreen());
     try {
       final response = await post(
-        Uri.parse('http://100.22.61.74:8000/api/token'),
+        Uri.parse('http://192.168.1.88:8000/api/token'),
         headers: {
           'accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -55,10 +53,13 @@ class _MyWidgetState extends State<LoginPage> {
         },
       );
       if (response.statusCode == 200) {
+        authController.login();
         final Map<String, dynamic> data = jsonDecode(response.body);
         final token = data['access_token'];
+        final type = data['token_type'];
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
+        await prefs.setString('type', type);
         return token;
       } else {
         throw Exception('Failed to authenticate user');
@@ -141,6 +142,7 @@ class _MyWidgetState extends State<LoginPage> {
                           ]),
                       child: TextField(
                         controller: passwordcontroller,
+                        obscureText: true,
                         decoration: InputDecoration(
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
@@ -179,7 +181,7 @@ class _MyWidgetState extends State<LoginPage> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     image: DecorationImage(
-                        image: AssetImage("assets/Gradient.jpg"),
+                        image: AssetImage("assets/gradient.jpg"),
                         fit: BoxFit.cover)),
                 child: Center(
                   child: Text(

@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:google_ml_kit/google_ml_kit.dart' as ml_kit;
 import 'package:image_picker/image_picker.dart';
-import 'package:medv/screens/components/Add/Reports.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:medv/screens/components/Add/Reports.dart';
 import '../../../components/pdfMobile.dart' if (dart.library.html) 'web.dart';
 
 class Scanner extends StatefulWidget {
@@ -22,6 +22,45 @@ class _ScannerState extends State<Scanner> {
   XFile? imageFile;
 
   String scannedText = "";
+
+  bool _isConverting = false;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      imageFile = pickedFile;
+    });
+  }
+
+  Future<void> _convertImageToPdf() async {
+    setState(() {
+      _isConverting = true;
+    });
+
+    // Load the image from file
+    final bytes = await File(imageFile!.path).readAsBytes();
+    final image = PdfBitmap(bytes);
+
+    // Create a new PDF document
+    final document = PdfDocument();
+
+    // Add a new page to the document
+    final page = document.pages.add();
+
+    // Draw the image on the page
+    page.graphics.drawImage(
+        image, Rect.fromLTWH(0, 0, page.size.width, page.size.height));
+
+    // Save the PDF document to file
+    final outputFilePath = '${imageFile!.path}.pdf';
+    final outputFile = File(outputFilePath);
+    await outputFile.writeAsBytes(await document.save());
+
+    setState(() {
+      _isConverting = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +135,6 @@ class _ScannerState extends State<Scanner> {
                           ),
                           onPressed: () {
                             getImage(ImageSource.camera);
-                            Get.to(() => reports(text: scannedText));
                           },
                           child: Container(
                             margin: const EdgeInsets.symmetric(
@@ -128,9 +166,10 @@ class _ScannerState extends State<Scanner> {
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (scannedText != " ")
+                    if (scannedText != "")
                       ElevatedButton(
-                          onPressed: _createPDF, child: Text("create PDF")),
+                          onPressed: _convertImageToPdf,
+                          child: Text("create PDF")),
                   ],
                 )),
               ],
@@ -177,51 +216,7 @@ class _ScannerState extends State<Scanner> {
     super.initState();
   }
 
-  Future<void> _createPDF() async {
-    PdfDocument document = PdfDocument();
-    final page = document.pages.add();
-
-    page.graphics
-        .drawString(scannedText, PdfStandardFont(PdfFontFamily.helvetica, 30));
-
-    // page.graphics.drawImage(
-    //     PdfBitmap(await _readImageData('Pdf_Succinctly.jpg')),
-    //     Rect.fromLTWH(0, 100, 440, 550));
-
-    PdfGrid grid = PdfGrid();
-    grid.style = PdfGridStyle(
-        font: PdfStandardFont(PdfFontFamily.helvetica, 30),
-        cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2));
-
-    grid.columns.add(count: 3);
-    grid.headers.add(1);
-
-    PdfGridRow header = grid.headers[0];
-    header.cells[0].value = 'Roll No';
-    header.cells[1].value = 'Name';
-    header.cells[2].value = 'Class';
-
-    PdfGridRow row = grid.rows.add();
-    row.cells[0].value = '1';
-    row.cells[1].value = 'Arya';
-    row.cells[2].value = '6';
-
-    row = grid.rows.add();
-    row.cells[0].value = '2';
-    row.cells[1].value = 'John';
-    row.cells[2].value = '9';
-
-    row = grid.rows.add();
-    row.cells[0].value = '3';
-    row.cells[1].value = 'Tony';
-    row.cells[2].value = '8';
-
-    grid.draw(
-        page: document.pages.add(), bounds: const Rect.fromLTWH(0, 0, 0, 0));
-
-    List<int> bytes = await document.save();
-    document.dispose();
-
-    saveAndLaunchFile(bytes, 'Output.pdf');
+  void PDFmaker() {
+    Get.to(() => reports(text: scannedText));
   }
 }
