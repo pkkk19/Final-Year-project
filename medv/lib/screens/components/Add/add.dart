@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:medv/screens/components/Add/Medication.dart';
 import 'package:medv/screens/components/Add/Reports.dart';
 import 'package:medv/screens/components/Add/custom_title.dart';
-import 'package:medv/screens/components/Add/scanner/OpenCVScanner.dart';
+import 'package:medv/screens/components/Add/documentScanner.dart';
 import 'package:medv/screens/scanner/Scanner.dart';
 
 import '../../../constants.dart';
@@ -40,7 +40,7 @@ class _AddState extends State<Add> {
             ),
             InkWell(
               borderRadius: BorderRadius.all(Radius.circular(50)),
-              onTap: () => Get.to(() => Scanner()),
+              onTap: () => Get.to(() => documentScanner()),
               child: Container(
                 width: 340,
                 height: 270,
