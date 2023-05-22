@@ -5,13 +5,14 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:medv/components/utiliReport.dart';
 import 'package:printing/printing.dart';
+import 'package:universal_html/html.dart';
 import '../../../components/pdfMobile.dart' if (dart.library.html) 'web.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class reports extends StatefulWidget {
-  reports({Key? key, required this.text}) : super(key: key);
-  final String text;
+  reports({Key? key, required this.image}) : super(key: key);
+  final File image;
 
   @override
   State<reports> createState() => _reportsState();

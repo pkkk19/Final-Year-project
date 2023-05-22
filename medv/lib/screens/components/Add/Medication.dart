@@ -233,8 +233,8 @@ class _ScannerState extends State<medication> {
 
     textScanning = false;
     setState(() {});
-    Get.to(() => SaveDetails(), arguments: {'medicationName': medicationName});
     getMedicationName();
+    Get.to(() => SaveDetails(), arguments: {'medicationName': medicationName});
   }
 
   void getMedicationName() {

@@ -217,6 +217,6 @@ class _ScannerState extends State<Scanner> {
   }
 
   void PDFmaker() {
-    Get.to(() => reports(text: scannedText));
+    // Get.to(() => reports(image: scannedText));
   }
 }

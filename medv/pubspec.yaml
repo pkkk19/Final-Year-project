@@ -29,7 +29,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  path_provider: ^2.0.14
+  path_provider:
   open_file: ^3.2.1
   flutter:
     sdk: flutter
@@ -37,6 +37,7 @@ dependencies:
   video_player: ^2.4.10
   syncfusion_flutter_pdf: ^21.1.38
   day_picker: ^2.1.1
+  android_alarm_manager_plus: ^3.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -48,7 +49,7 @@ dependencies:
   image: ^3.0.2
   shared_preferences: ^2.0.20
 
-  printing: ^5.6.6
+  printing:
   image_size_getter:
   provider:
   flutter_isolate:
@@ -56,7 +57,10 @@ dependencies:
   back_button_interceptor:
   dependencies:
   document_scanner_flutter: ^0.2.7
-  advance_pdf_viewer: ^2.0.1
+  advance_pdf_viewer: any
+  firebase_storage: ^11.2.1
+  firebase_core: ^2.13.0
+  awesome_snackbar_content:
 
 dev_dependencies:
   flutter_test:

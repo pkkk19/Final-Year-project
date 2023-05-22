@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medv/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:medv/screens/components/Add/add.dart';
+import 'package:medv/screens/components/Notifications/notification.dart';
 import 'package:medv/screens/components/home/User_home_test.dart';
 import 'package:medv/screens/components/profile/profile_screen.dart';
 
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     UserHomeTest(),
     Add(),
+    notification(),
     ProfileScreen(),
   ];
   @override
@@ -57,6 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 GButton(
                   icon: Icons.add,
                   text: 'Add',
+                ),
+                GButton(
+                  icon: Icons.notifications,
+                  text: "Notification",
                 ),
                 GButton(
                   icon: Icons.person_outline_rounded,

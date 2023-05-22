@@ -7,8 +7,11 @@ import 'package:medv/constants.dart';
 import 'package:medv/screens/home_screen.dart';
 import 'package:medv/screens/scanner/Scanner.dart';
 import 'package:medv/welcome_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   Get.put(AuthController());
   runApp(const MyApp());
 }

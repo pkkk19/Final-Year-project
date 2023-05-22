@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:medv/screens/components/Add/Medication.dart';
 import 'package:medv/screens/components/Add/Reports.dart';
 import 'package:medv/screens/components/Add/custom_title.dart';
-import 'package:medv/screens/components/Add/documentScanner.dart';
+import 'package:medv/screens/components/Add/reportsDisplay.dart';
+import 'package:medv/screens/components/Add/storageReports/userdetail.dart';
 import 'package:medv/screens/scanner/Scanner.dart';
 
 import '../../../constants.dart';
@@ -19,6 +20,15 @@ class Add extends StatefulWidget {
 
 class _AddState extends State<Add> {
   bool darkMode = false;
+  final UserDetail userDetail = UserDetail();
+  String Username = "";
+
+  username() async {
+    Username = await userDetail.getName();
+    print(Username);
+    Get.to(() => reportsDisplay(), arguments: {'name': Username});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +50,7 @@ class _AddState extends State<Add> {
             ),
             InkWell(
               borderRadius: BorderRadius.all(Radius.circular(50)),
-              onTap: () => Get.to(() => documentScanner()),
+              onTap: () => username(),
               child: Container(
                 width: 340,
                 height: 270,

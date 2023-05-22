@@ -10,11 +10,11 @@ import fastapi.security as _security
 import database as _database
 import schemas as _schemas
 import models as _models
+from dotenv import load_dotenv
 
 
-_dotenv.load_dotenv()
-
-_JWT_SECRET = "token"
+load_dotenv()
+_JWT_SECRET = _os.getenv("token")
 
 oauth2schema = _security.OAuth2PasswordBearer("/api/token")
 
