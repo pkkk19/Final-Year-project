@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medv/LoginPage.dart';
 import 'package:medv/main.dart';
-import 'package:medv/signup_page.dart';
+import 'package:medv/User-mgmt/signup_page.dart';
 import 'package:video_player/video_player.dart';
 
 class splash extends StatefulWidget {

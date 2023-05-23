@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:medv/constants.dart';
+import 'package:medv/screens/components/Add/storageReports/medicalID.dart';
+import 'package:medv/screens/components/Add/storageReports/userdetail.dart';
 import 'package:medv/screens/scanner/Scanner.dart';
 
 class homeBody extends StatefulWidget {
@@ -14,13 +16,46 @@ class homeBody extends StatefulWidget {
 }
 
 class _homeBodyState extends State<homeBody> {
+  final medicalID infos = medicalID();
+  Map<String, dynamic> latestUpload = {};
+  final UserDetail userDetail = UserDetail();
+  String Username = "";
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      fetchData();
+      username();
+    });
+  }
+
+  username() async {
+    Username = await userDetail.getName();
+    print(Username);
+  }
+
+  Future<void> fetchData() async {
+    try {
+      latestUpload = await infos.Infos();
+      setState(() {});
+    } catch (error) {
+      print('Error occurred while fetching data: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final medicalID infos = medicalID();
     var darkMode;
     return Container(
       child: InkWell(
         borderRadius: BorderRadius.all(Radius.circular(50)),
-        onTap: () => Get.to(() => Scanner()),
+        onTap: () {
+          setState(() {
+            homeBody();
+          });
+        },
         child: Container(
           width: 340,
           height: 500,
@@ -58,7 +93,7 @@ class _homeBodyState extends State<homeBody> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "John Doe",
+                                Username,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
@@ -69,8 +104,23 @@ class _homeBodyState extends State<homeBody> {
                                       fontSize: 18, // reduce font size
                                     ),
                               ),
+                              Column(
+                                children: [
+                                  Text(
+                                    "DOB : ${latestUpload['DOB']}",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 13, // reduce font size
+                                        ),
+                                  ),
+                                ],
+                              ),
                               Text(
-                                "DOB : " + "07/06/2000",
+                                "Height : ${latestUpload['height']}",
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
@@ -81,7 +131,7 @@ class _homeBodyState extends State<homeBody> {
                                     ),
                               ),
                               Text(
-                                "Height : " + "5'6",
+                                "Weight : ${latestUpload['weight']}",
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
@@ -92,7 +142,7 @@ class _homeBodyState extends State<homeBody> {
                                     ),
                               ),
                               Text(
-                                "Weight : " + "72",
+                                "Blood Type : ${latestUpload['bloodtype']}",
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
@@ -103,18 +153,7 @@ class _homeBodyState extends State<homeBody> {
                                     ),
                               ),
                               Text(
-                                "Blood Type : " + "A+",
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 13, // reduce font size
-                                    ),
-                              ),
-                              Text(
-                                "Organ Donor : " + "No",
+                                "Organ Donor : ${latestUpload['organdonor']}",
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
@@ -147,7 +186,7 @@ class _homeBodyState extends State<homeBody> {
                                 ),
                           ),
                           Text(
-                            "Diabeties, Asthma, Hiatal Hernia, Heart ByPass, Blood Pressure",
+                            "${latestUpload['pmc']}",
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
@@ -180,7 +219,7 @@ class _homeBodyState extends State<homeBody> {
                                 ),
                           ),
                           Text(
-                            "Lidoderm Patch, Geratol, Vitamin D",
+                            "${latestUpload['medication']}",
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
@@ -213,7 +252,7 @@ class _homeBodyState extends State<homeBody> {
                                 ),
                           ),
                           Text(
-                            "Penicillin, Sulfa, Peanuts",
+                            "${latestUpload['allergies']}",
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme

@@ -1,16 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:medv/LoginPage.dart';
-import 'package:medv/Splash.dart';
+import 'User-mgmt/LoginPage.dart';
 import 'package:get/get.dart';
 import 'package:medv/components/auth_controller.dart';
 import 'package:medv/constants.dart';
-import 'package:medv/screens/home_screen.dart';
-import 'package:medv/screens/scanner/Scanner.dart';
-import 'package:medv/welcome_page.dart';
-import 'package:firebase_core/firebase_core.dart';
 
+// late final LocalNotificationaService service;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  // service = LocalNotificationaService();
+  // service.intialize();
   Firebase.initializeApp();
   Get.put(AuthController());
   runApp(const MyApp());
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
         textTheme: Theme.of(context).textTheme.apply(bodyColor: KTextColor),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginPage(),
+      home: LoginScreen(),
     );
   }
 }

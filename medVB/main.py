@@ -111,3 +111,34 @@ async def delete_medicine(medicine_id: int, user: _schemas.User = _fastapi.Depen
                           ):
 
     return await _services.drop_UserMedicine(db=db, user=user, medicine_id=medicine_id)
+
+
+@app.post("/userinfo", response_model=_schemas.userInfo)
+async def create_user_info(
+    user_info: _schemas.userInfoCreate,
+    user: _schemas.User = _fastapi.Depends(_services.get_current_user),
+    db: _orm.Session = _fastapi.Depends(_services.get_db)
+):
+    return await _services.UserInfo(user=user, db=db, userInfo=user_info)
+
+
+@app.get("/userinfo", response_model=List[_schemas.userInfo])
+async def get_user_info(
+    user: _schemas.User = _fastapi.Depends(_services.get_current_user),
+    db: _orm.Session = _fastapi.Depends(_services.get_db)
+):
+    return await _services.get_UserInfo(user=user, db=db)
+
+
+class UserInfoResponse(_schemas.userInfo):
+    pass
+
+
+@app.put("/userinfo", response_model=_schemas.userInfo)
+async def userInfoUpdate(
+    user_info_update: _schemas.userInfoUpdate,
+    user: _schemas.User = _fastapi.Depends(_services.get_current_user),
+    db: _orm.Session = _fastapi.Depends(_services.get_db)
+):
+    user_information = await _services.update_UserInfo(user=user, db=db, user_info_update=user_info_update)
+    return user_information

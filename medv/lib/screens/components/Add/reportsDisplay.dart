@@ -1,19 +1,18 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:document_scanner_flutter/document_scanner_flutter.dart';
 import 'package:document_scanner_flutter/configs/configs.dart';
 import 'package:flutter/material.dart';
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medv/components/reportViewer.dart';
 import 'package:medv/constants.dart';
 import 'package:get/get.dart';
-import 'package:medv/screens/components/Add/add.dart';
 import 'package:medv/screens/components/Add/storageReports/storageService.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:medv/screens/components/Add/storageReports/userdetail.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:medv/screens/components/home/User_home_test.dart';
-import 'package:universal_html/js_util.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class reportsDisplay extends StatefulWidget {
   @override
@@ -21,8 +20,6 @@ class reportsDisplay extends StatefulWidget {
 }
 
 class _MyAppState extends State<reportsDisplay> {
-  PDFDocument? _scannedDocument;
-  File? _scannedDocumentFile;
   File? _scannedImage;
   final Storage storage = Storage();
   final UserDetail userDetail = UserDetail();
@@ -39,25 +36,6 @@ class _MyAppState extends State<reportsDisplay> {
   username() async {
     Username = await userDetail.getName();
     print(Username);
-  }
-
-  openPdfScanner(BuildContext context) async {
-    var doc = await DocumentScannerFlutter.launchForPdf(context,
-        labelsConfig: {
-          ScannerLabelsConfig.ANDROID_NEXT_BUTTON_LABEL: "Next Steps",
-          ScannerLabelsConfig.PDF_GALLERY_FILLED_TITLE_SINGLE: "Only 1 Page",
-          ScannerLabelsConfig.PDF_GALLERY_FILLED_TITLE_MULTIPLE:
-              "Only {PAGES_COUNT} Page"
-        },
-        source: ScannerFileSource.GALLERY);
-    if (doc != null) {
-      _scannedDocument = null;
-      setState(() {});
-      await Future.delayed(Duration(milliseconds: 100));
-      _scannedDocumentFile = doc;
-      _scannedDocument = await PDFDocument.fromFile(doc);
-      setState(() {});
-    }
   }
 
   openImageScanner(BuildContext context) async {
@@ -93,6 +71,8 @@ class _MyAppState extends State<reportsDisplay> {
   Widget build(BuildContext context) {
     final arguments = Get.arguments;
     final username = arguments['name'];
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -159,15 +139,27 @@ class _MyAppState extends State<reportsDisplay> {
                                     if (snapshot.connectionState ==
                                             ConnectionState.done &&
                                         snapshot.hasData) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(40)),
-                                        width: 10,
-                                        height: 220,
-                                        child: Image.network(
-                                          snapshot.data!,
-                                          fit: BoxFit.cover,
+                                      return InkWell(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(50)),
+                                        onTap: () {
+                                          setState(() {
+                                            Get.to(() => Reportviewer(),
+                                                arguments: {
+                                                  'URL': snapshot.data
+                                                });
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(40)),
+                                          width: 10,
+                                          height: 220,
+                                          child: Image.network(
+                                            snapshot.data!,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       );
                                     }
@@ -191,9 +183,37 @@ class _MyAppState extends State<reportsDisplay> {
                   }),
               Center(
                 child: Builder(builder: (context) {
-                  return ElevatedButton(
-                      onPressed: () => openImageScanner(context),
-                      child: Text("Image Scan"));
+                  return Column(
+                    children: [
+                      SizedBox(height: 60),
+                      GestureDetector(
+                        onTap: () {
+                          openImageScanner(context);
+                        },
+                        child: Container(
+                          width: w * 0.5,
+                          height: h * 0.08,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color:
+                                  kPrimaryColor, //                   <--- border color
+                              width: 3.0,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Report",
+                              style: TextStyle(
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.bold,
+                                  color: kPrimaryColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
                 }),
               ),
             ],
@@ -201,5 +221,20 @@ class _MyAppState extends State<reportsDisplay> {
         ),
       ),
     );
+  }
+
+  Future<void> _createPDF() async {
+    final PdfDocument document = PdfDocument();
+    final Uint8List imageData = File('input.png').readAsBytesSync();
+//Load the image using PdfBitmap.
+    final PdfBitmap image = PdfBitmap(imageData);
+    document.pages
+        .add()
+        .graphics
+        .drawImage(image, const Rect.fromLTWH(0, 0, 500, 200));
+// Save the document.
+    File('HelloWorld.pdf').writeAsBytes(await document.save());
+// Dispose the document.
+    document.dispose();
   }
 }

@@ -1,4 +1,5 @@
 import datetime as _dt
+from typing import Optional
 
 import pydantic as _pydantic
 
@@ -80,3 +81,40 @@ class medicine(medicineBase):
 
     class Config:
         orm_mode = True
+
+# ======================================================================
+
+
+class userInfoBase(_pydantic.BaseModel):
+    DOB: str
+    height: str
+    weight: str
+    bloodtype: str
+    organdonor: str
+    pmc: str
+    medication: str
+    allergies: str
+
+
+class userInfoCreate(userInfoBase):
+    pass
+
+
+class userInfo(userInfoBase):
+    id: int
+    owner_id: int
+    date_created: _dt.datetime
+
+    class Config:
+        orm_mode = True
+
+
+class userInfoUpdate(_pydantic.BaseModel):
+    DOB: Optional[str]
+    height: Optional[float]
+    weight: Optional[float]
+    bloodtype: Optional[str]
+    organdonor: Optional[bool]
+    pmc: Optional[str]
+    medication: Optional[str]
+    allergies: Optional[str]

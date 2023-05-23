@@ -1,74 +1,61 @@
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'dart:io';
+// import 'dart:typed_data';
+// import 'package:flutter/services.dart' show rootBundle;
 
-class ImageToPdfConverter extends StatefulWidget {
-  @override
-  _ImageToPdfConverterState createState() => _ImageToPdfConverterState();
-}
+// import 'package:flutter/material.dart';
+// import 'package:medv/components/reportViewer.dart';
+// import 'package:syncfusion_flutter_pdf/pdf.dart';
 
-class _ImageToPdfConverterState extends State<ImageToPdfConverter> {
-  XFile? imageFile;
-  bool _isConverting = false;
+// class ImageToPdfConverter extends StatefulWidget {
+//   @override
+//   _ImageToPdfConverterState createState() => _ImageToPdfConverterState();
+// }
 
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      imageFile = pickedFile;
-    });
-  }
+// class _ImageToPdfConverterState extends State<ImageToPdfConverter> {
+//   bool _isConverting = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _pickImage();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
 
-  Future<void> _convertImageToPdf() async {
-    setState(() {
-      _isConverting = true;
-    });
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Image to PDF Converter'),
+//       ),
+//       body: Center(
+//         child: _isConverting
+//             ? CircularProgressIndicator()
+//             : ElevatedButton(
+//                 onPressed: _createPDF,
+//                 child: Text('Convert Image to PDF'),
+//               ),
+//       ),
+//     );
+//   }
+// }
 
-    // Load the image from file
-    final bytes = await File(imageFile!.path).readAsBytes();
-    final image = PdfBitmap(bytes);
+// Future<void> _createPDF() async {
+//   //Create a new PDF document.
+//   final PdfDocument document = PdfDocument();
+// //Read image data.
+//   final Uint8List imageData = File('assets/images/ID.png').readAsBytesSync();
+// //Load the image using PdfBitmap.
+//   final PdfBitmap image = PdfBitmap(imageData);
+// //Draw the image to the PDF page.
+//   document.pages
+//       .add()
+//       .graphics
+//       .drawImage(image, const Rect.fromLTWH(0, 0, 500, 200));
+// // Save the document.
+//   File('ImageToPDF.pdf').writeAsBytes(await document.save());
+// // Dispose the document.
+//   document.dispose();
+// }
 
-    // Create a new PDF document
-    final document = PdfDocument();
-
-    // Add a new page to the document
-    final page = document.pages.add();
-
-    // Draw the image on the page
-    page.graphics.drawImage(
-        image, Rect.fromLTWH(0, 0, page.size.width, page.size.height));
-
-    // Save the PDF document to file
-    final outputFilePath = '${imageFile!.path}.pdf';
-    final outputFile = File(outputFilePath);
-    await outputFile.writeAsBytes(await document.save());
-
-    setState(() {
-      _isConverting = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Image to PDF Converter'),
-      ),
-      body: Center(
-        child: _isConverting
-            ? CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed: _convertImageToPdf,
-                child: Text('Convert Image to PDF'),
-              ),
-      ),
-    );
-  }
-}
+// Future<Uint8List> _readImageData(String name) async {
+//   final data = await rootBundle.load('images/$name');
+//   return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+// }

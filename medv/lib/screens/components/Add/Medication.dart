@@ -88,117 +88,127 @@ class _ScannerState extends State<medication> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color:
-              kPrimaryColor, // Set the color of all icons in the app bar here
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: kPrimaryColor,
-            ),
-        title: const Text(
-          "Medication",
-        ),
-      ),
-      body: Center(
-          child: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (textScanning) const CircularProgressIndicator(),
-              if (!textScanning && imageFile == null) Container(),
-              if (imageFile != null) Image.file(File(imageFile!.path)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
-                      padding: const EdgeInsets.only(top: 10),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          onPrimary: Colors.grey,
-                          shadowColor: Colors.grey[400],
-                          elevation: 10,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0)),
-                        ),
-                        onPressed: () {
-                          getImage(ImageSource.gallery);
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 5),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.image,
-                                size: 30,
-                              ),
-                              Text(
-                                "Gallery",
-                                style: TextStyle(
-                                    fontSize: 13, color: Colors.grey[600]),
-                              )
-                            ],
-                          ),
-                        ),
-                      )),
-                  Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
-                      padding: const EdgeInsets.only(top: 10),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          onPrimary: Colors.grey,
-                          shadowColor: Colors.grey[400],
-                          elevation: 10,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0)),
-                        ),
-                        onPressed: () {
-                          getImage(ImageSource.camera);
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 5),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.camera_alt,
-                                size: 30,
-                              ),
-                              Text(
-                                "Camera",
-                                style: TextStyle(
-                                    fontSize: 13, color: Colors.grey[600]),
-                              )
-                            ],
-                          ),
-                        ),
-                      )),
+      backgroundColor: KBackgroundColor,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Spacer(),
+          Container(
+            height: 23,
+          ),
+          InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+            onTap: () {
+              getImage(ImageSource.gallery);
+            },
+            child: Container(
+              width: 340,
+              height: 270,
+              child: Column(
+                children: <Widget>[
+                  Spacer(),
+                  ImageIcon(AssetImage("assets/icons/Camera.png"),
+                      size: 80, color: Colors.black),
+                  Text(
+                    "Gallery",
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Spacer()
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                child: Text(
-                  medicationName,
-                  style: TextStyle(fontSize: 20),
-                ),
-              )
-            ],
+              decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(4.0, 4.0),
+                        blurRadius: 15.0,
+                        spreadRadius: 1.0),
+                    BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(-4.0, -4.0),
+                        blurRadius: 15.0,
+                        spreadRadius: 1.0),
+                  ]),
+            ),
           ),
-        ),
-      )),
+          Spacer(),
+          InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+            onTap: () {
+              getImage(ImageSource.camera);
+            },
+            child: Container(
+              width: 340,
+              height: 270,
+              child: Column(
+                children: <Widget>[
+                  Spacer(),
+                  ImageIcon(AssetImage("assets/icons/Gallery.png"),
+                      size: 80, color: Colors.black),
+                  Text(
+                    "Camera",
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Spacer()
+                ],
+              ),
+              decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(4.0, 4.0),
+                        blurRadius: 15.0,
+                        spreadRadius: 1.0),
+                    BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(-4.0, -4.0),
+                        blurRadius: 15.0,
+                        spreadRadius: 1.0),
+                  ]),
+            ),
+          ),
+          Spacer(),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: <Widget>[
+          //     Padding(
+          //       padding: EdgeInsets.only(top: 50, right: 3),
+          //       child: ElevatedButton(
+          //         child: Text(
+          //           'Light',
+          //           style: TextStyle(color: Colors.black),
+          //         ),
+          //         onPressed: () {
+          //           setState(() {
+          //             darkMode = false;
+          //           });
+          //         },
+          //       ),
+          //     ),
+          //     Padding(
+          //       padding: EdgeInsets.only(top: 50, left: 3),
+          //       child: ElevatedButton(
+          //         child: Text(
+          //           'Dark',
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //         onPressed: () {
+          //           setState(() {
+          //             darkMode = true;
+          //           });
+          //         },
+          //       ),
+          //     ),
+          //   ],
+          // ),
+        ],
+      ),
     );
   }
 

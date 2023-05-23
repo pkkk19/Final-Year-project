@@ -36,31 +36,16 @@ class medicineinfo {
   }
 }
 
-class Medicine {
-  final String medicineName;
-  final String time;
-  final String days;
-  final String id;
-  final String ownerId;
-  final String dateCreated;
+Future<void> deleteMedicine(int medicineId) async {
+  final url = Uri.parse('http://localhost:8000/medicine-delete/$medicineId');
 
-  Medicine({
-    required this.medicineName,
-    required this.time,
-    required this.days,
-    required this.id,
-    required this.ownerId,
-    required this.dateCreated,
-  });
+  final response = await delete(url);
 
-  factory Medicine.fromJson(Map<String, dynamic> json) {
-    return Medicine(
-      medicineName: json['medicineName'],
-      time: json['time'],
-      days: json['days'],
-      id: json['id'],
-      ownerId: json['owner_id'],
-      dateCreated: json['date_created'],
-    );
+  if (response.statusCode == 204) {
+    print('Medicine deleted successfully.');
+  } else {
+    print('Failed to delete medicine.');
+    print('Response status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
   }
 }

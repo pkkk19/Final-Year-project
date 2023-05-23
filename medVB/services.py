@@ -144,3 +144,32 @@ async def drop_UserMedicine(user: _schemas.User, db: _orm.Session, medicine_id: 
         owner_id=user.id, id=medicine_id).delete()
     db.commit()
     return None
+
+# ==========================================================================================================
+
+
+async def UserInfo(user: _schemas.User, db: _orm.Session, userInfo: _schemas.userInfoCreate):
+    userInformation = _models.userInfo(DOB=userInfo.DOB, height=userInfo.height, weight=userInfo.weight, bloodtype=userInfo.bloodtype,
+                                       organdonor=userInfo.organdonor, pmc=userInfo.pmc, medication=userInfo.medication, allergies=userInfo.allergies, owner_id=user.id)
+    db.add(userInformation)
+    db.commit()
+    db.refresh(userInformation)
+    return _schemas.userInfo.from_orm(userInformation)
+
+
+async def get_UserInfo(user: _schemas.User, db: _orm.Session):
+    userInformation = db.query(_models.userInfo).filter_by(owner_id=user.id)
+    return list(map(_schemas.userInfo.from_orm, userInformation))
+
+
+async def update_UserInfo(user: _schemas.User, db: _orm.Session, updatedInfo: _schemas.userInfo):
+    userInformation = db.query(_models.userInfo).filter_by(
+        owner_id=user.id).first()
+    if userInformation:
+        for field, value in updatedInfo.dict().items():
+            if value is not None:
+                setattr(userInformation, field, value)
+        db.commit()
+        db.refresh(userInformation)
+        return _schemas.userInfo.from_orm(userInformation)
+    return None
